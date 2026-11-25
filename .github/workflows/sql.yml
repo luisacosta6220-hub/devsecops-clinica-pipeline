@@ -1,0 +1,24 @@
+name: Analisis SAST - SQL Injection
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  sql-injection-scan:
+    name: Escaneo de SQL Injection (SAST)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar Semgrep para detectar SQL Injection
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/sql-injection
+            p/javascript
+            p/owasp-top-ten
